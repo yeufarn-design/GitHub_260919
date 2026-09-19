@@ -9,6 +9,7 @@ const themeToggle = document.querySelector('#theme-toggle');
 const themeToggleIcon = document.querySelector('#theme-toggle-icon');
 const themeToggleLabel = document.querySelector('#theme-toggle-label');
 const filterButtons = document.querySelectorAll('.filter-button');
+const clearCompletedButton = document.querySelector('#clear-completed');
 
 const THEME_STORAGE_KEY = 'todo-list-theme';
 let currentFilter = 'all';
@@ -111,7 +112,9 @@ function renderTodos() {
   });
 
   const unfinishedCount = todos.filter((todo) => !todo.completed).length;
+  const completedCount = todos.filter((todo) => todo.completed).length;
   remainingCount.textContent = `未完成:${unfinishedCount} 項`;
+  clearCompletedButton.disabled = completedCount === 0;
   if (visibleTodos.length === 0) {
     const emptyMessages = {
       all: '還沒有任何待辦事項,新增一個吧!',
@@ -134,6 +137,19 @@ filterButtons.forEach((button) => {
     });
     renderTodos();
   });
+});
+
+// 確認後一次清除所有已完成事項,並同步保存資料與更新畫面。
+clearCompletedButton.addEventListener('click', () => {
+  const completedCount = todos.filter((todo) => todo.completed).length;
+  if (completedCount === 0) return;
+
+  const shouldClear = window.confirm(`確定要清除 ${completedCount} 項已完成事項嗎?`);
+  if (!shouldClear) return;
+
+  todos = todos.filter((todo) => !todo.completed);
+  saveTodos();
+  renderTodos();
 });
 
 // 表單送出時新增待辦,空白內容不會建立資料。

@@ -254,12 +254,37 @@ h1 {
 }
 
 .todo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-top: 24px;
   padding-top: 18px;
   color: var(--text-secondary);
   border-top: 1px solid var(--border-color);
-  text-align: right;
   font-size: 0.9rem;
+}
+
+.clear-completed-button {
+  padding: 6px 8px;
+  color: var(--danger-color);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.clear-completed-button:hover:not(:disabled) {
+  background: rgba(182, 92, 83, 0.1);
+  border-color: var(--danger-color);
+}
+
+.clear-completed-button:disabled {
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .visually-hidden {
