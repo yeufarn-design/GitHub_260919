@@ -7,8 +7,39 @@
   --border-color: #dce7e2;
   --accent-color: #277c68;
   --accent-hover: #1e6655;
+  --button-text: #ffffff;
   --danger-color: #b65c53;
   --shadow-color: rgba(39, 65, 57, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-background: #18211f;
+    --card-background: #24312e;
+    --item-background: #2d3b37;
+    --text-primary: #edf5f1;
+    --text-secondary: #afc0b9;
+    --border-color: #41534d;
+    --accent-color: #65c4a7;
+    --accent-hover: #83d8bd;
+    --button-text: #18211f;
+    --danger-color: #ef9589;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+[data-theme="dark"] {
+  --page-background: #18211f;
+  --card-background: #24312e;
+  --item-background: #2d3b37;
+  --text-primary: #edf5f1;
+  --text-secondary: #afc0b9;
+  --border-color: #41534d;
+  --accent-color: #65c4a7;
+  --accent-hover: #83d8bd;
+  --button-text: #18211f;
+  --danger-color: #ef9589;
+  --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -41,6 +72,13 @@ body {
   margin-bottom: 28px;
 }
 
+.header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
 .eyebrow {
   margin: 0 0 8px;
   color: var(--accent-color);
@@ -61,10 +99,54 @@ h1 {
   font-size: 0.95rem;
 }
 
+.theme-toggle,
+.filter-button {
+  color: var(--text-primary);
+  background: var(--item-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  font-size: 0.82rem;
+}
+
+.theme-toggle:hover,
+.filter-button:hover {
+  border-color: var(--accent-color);
+}
+
 .todo-form {
   display: flex;
   gap: 10px;
   margin-bottom: 22px;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 8px;
+  margin: -6px 0 22px;
+}
+
+.filter-button {
+  padding: 7px 14px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.filter-button.is-active {
+  color: var(--card-background);
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  font-weight: 700;
 }
 
 .todo-input {
@@ -86,7 +168,7 @@ h1 {
 
 .add-button {
   padding: 0 20px;
-  color: #ffffff;
+  color: var(--button-text);
   background: var(--accent-color);
   border: 0;
   border-radius: 10px;
@@ -200,6 +282,15 @@ h1 {
   .todo-card {
     padding: 26px 20px;
     border-radius: 16px;
+  }
+
+  .header-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .theme-toggle {
+    justify-content: center;
   }
 
   .todo-form {

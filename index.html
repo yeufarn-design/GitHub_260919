@@ -9,8 +9,16 @@
 <body>
   <main class="todo-card">
     <header class="todo-header">
-      <p class="eyebrow">TODAY'S LIST</p>
-      <h1>待辦清單</h1>
+      <div class="header-row">
+        <div>
+          <p class="eyebrow">TODAY'S LIST</p>
+          <h1>待辦清單</h1>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+          <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span id="theme-toggle-label">深色模式</span>
+        </button>
+      </div>
       <p class="subtitle">把今天想完成的事，一件件放在這裡。</p>
     </header>
 
@@ -26,6 +34,12 @@
       >
       <button class="add-button" type="submit">新增</button>
     </form>
+
+    <div class="filter-controls" role="group" aria-label="篩選待辦事項">
+      <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">全部</button>
+      <button class="filter-button" type="button" data-filter="active" aria-pressed="false">未完成</button>
+      <button class="filter-button" type="button" data-filter="completed" aria-pressed="false">已完成</button>
+    </div>
 
     <!-- 待辦事項會由 JavaScript 動態放入這個清單 -->
     <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
