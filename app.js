@@ -11,7 +11,16 @@ const themeToggleLabel = document.querySelector('#theme-toggle-label');
 const filterButtons = document.querySelectorAll('.filter-button');
 
 const THEME_STORAGE_KEY = 'todo-list-theme';
-let currentFilter = 'all';
+const FILTER_STORAGE_KEY = 'todo-list-filter';
+const VALID_FILTERS = ['all', 'active', 'completed'];
+
+// 讀取並驗證篩選條件,無效值安全回退為全部。
+function loadFilter() {
+  const savedFilter = localStorage.getItem(FILTER_STORAGE_KEY);
+  return VALID_FILTERS.includes(savedFilter) ? savedFilter : 'all';
+}
+
+let currentFilter = loadFilter();
 
 // 依照使用者的選擇設定主題,沒有選擇時交由 CSS 跟隨系統設定。
 function applyTheme(theme) {
@@ -44,6 +53,17 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   applyTheme(nextTheme);
 });
+
+// 更新篩選按鈕的選中狀態。
+function updateFilterButtons() {
+  filterButtons.forEach((button) => {
+    const isActive = button.dataset.filter === currentFilter;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+}
+
+updateFilterButtons();
 
 // 從 localStorage 讀取資料,格式不正確時回傳空陣列。
 function loadTodos() {
@@ -127,11 +147,8 @@ function renderTodos() {
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
     currentFilter = button.dataset.filter;
-    filterButtons.forEach((currentButton) => {
-      const isActive = currentButton === button;
-      currentButton.classList.toggle('is-active', isActive);
-      currentButton.setAttribute('aria-pressed', String(isActive));
-    });
+    localStorage.setItem(FILTER_STORAGE_KEY, currentFilter);
+    updateFilterButtons();
     renderTodos();
   });
 });
