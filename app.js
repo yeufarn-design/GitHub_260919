@@ -115,8 +115,8 @@ function renderTodos() {
   if (visibleTodos.length === 0) {
     const emptyMessages = {
       all: '還沒有任何待辦事項,新增一個吧!',
-      active: '太棒了,目前沒有未完成事項!',
-      completed: '目前還沒有已完成事項。',
+      active: '太棒了,目前沒有未完成事項,其他項目仍在清單中。',
+      completed: '目前沒有已完成事項,其他項目仍在清單中。',
     };
     emptyState.textContent = emptyMessages[currentFilter];
   }
